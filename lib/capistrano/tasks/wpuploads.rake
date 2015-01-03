@@ -21,8 +21,9 @@ namespace :wpcli do
       desc "Push local uploads delta to remote machine"
       task :push do
         roles(:all).each do |role|
+          set :port, role.port.nil ? '' : '-p #{role.port} '
           run_locally do
-            execute :rsync, fetch(:wpcli_rsync_options), fetch(:wpcli_local_uploads_dir), "#{role.user}@#{role.hostname}:#{fetch(:wpcli_remote_uploads_dir)}"
+            execute :rsync, fetch(:wpcli_rsync_options), fetch(:wpcli_local_uploads_dir), "#{port}#{role.user}@#{role.hostname}:#{fetch(:wpcli_remote_uploads_dir)}"
           end
         end
       end
