@@ -22,7 +22,7 @@ namespace :wpcli do
       task :push do
         roles(:all).each do |role|
           run_locally do
-            set :port, defined? role.port ? '-p #{role.port} ': ''
+            set :port, '-p #{role.port} '
             execute :rsync, fetch(:wpcli_rsync_options), fetch(:wpcli_local_uploads_dir), "#{port}#{role.user}@#{role.hostname}:#{fetch(:wpcli_remote_uploads_dir)}"
           end
         end
